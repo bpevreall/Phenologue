@@ -13,7 +13,7 @@
     "db:seed:local": "tsx scripts/seed-founder-data.ts --local",
     "db:import:cultivars": "tsx scripts/import-cultivars.ts",
     "db:import:medbud": "tsx scripts/import-medbud.ts",
-    "db:reset:local": "rm -rf .wrangler/state && pnpm db:migrate:local && pnpm db:seed:local",
+    "db:reset:local": "rm -rf .wrangler/state && npm run db:migrate:local && npm run db:seed:local",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"

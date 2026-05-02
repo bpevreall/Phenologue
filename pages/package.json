@@ -7,8 +7,8 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy:dev": "wrangler pages deploy .svelte-kit/cloudflare --project-name phenologue-dev",
-    "deploy:prod": "wrangler pages deploy .svelte-kit/cloudflare --project-name phenologue-prod",
+    "deploy:dev": "wrangler pages deploy .svelte-kit/cloudflare --project-name phenologue-dev --branch dev --commit-dirty=true",
+    "deploy:prod": "wrangler pages deploy .svelte-kit/cloudflare --project-name phenologue --branch main --commit-dirty=true",
     "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {

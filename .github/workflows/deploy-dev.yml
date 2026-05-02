@@ -1,8 +1,11 @@
 name: Deploy — dev
 
+# Manual-only until repository secrets CLOUDFLARE_API_TOKEN and
+# CLOUDFLARE_ACCOUNT_ID are configured. Run via "Actions → Deploy — dev →
+# Run workflow" once secrets are in place. Until then the maintainer deploys
+# manually with `npx wrangler deploy --env dev` etc.
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   worker-dev:
@@ -13,19 +16,17 @@ jobs:
         working-directory: worker
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 9 }
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-          cache-dependency-path: worker/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm db:migrate:dev
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - run: npm ci
+      - run: npm run db:migrate:dev
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      - run: pnpm deploy:dev
+      - run: npm run deploy:dev
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -39,16 +40,14 @@ jobs:
         working-directory: pages
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 9 }
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-          cache-dependency-path: pages/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
-      - run: pnpm deploy:dev
+          cache: npm
+          cache-dependency-path: pages/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npm run deploy:dev
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
