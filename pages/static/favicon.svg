@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Phenologue mark — paper background with accent-red P, mirrors the
+       editorial.css palette: --paper #f4efe6, --ink #1a1a1a, --accent #c14b27. -->
+  <rect width="64" height="64" rx="8" fill="#f4efe6"/>
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="44" font-weight="600" fill="#1a1a1a">P</text>
+  <circle cx="48" cy="48" r="5" fill="#c14b27"/>
+</svg>
