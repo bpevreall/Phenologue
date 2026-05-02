@@ -1,0 +1,7 @@
+name = "phenologue"
+compatibility_date = "2025-07-18"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "./.svelte-kit/cloudflare"
+
+# To deploy the dev project from this same config, override --name at deploy:
+#   wrangler pages deploy --project-name=phenologue-dev --branch=dev

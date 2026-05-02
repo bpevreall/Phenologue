@@ -1,0 +1,1 @@
+/api/* https://phenologue-worker-prod.hanoverdisplays.workers.dev/api/:splat 200

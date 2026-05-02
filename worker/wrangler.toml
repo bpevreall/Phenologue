@@ -1,0 +1,87 @@
+name = "phenologue-worker"
+main = "src/index.ts"
+compatibility_date = "2025-07-18"
+compatibility_flags = ["nodejs_compat"]
+
+# Local / default environment.
+# `wrangler dev` uses these bindings against a local in-memory D1.
+[[d1_databases]]
+binding = "DB"
+database_name = "phenologue"
+database_id = "PLACEHOLDER_LOCAL_ID"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "phenologue-images"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "PLACEHOLDER_KV_ID"
+
+[[queues.producers]]
+binding = "AGG_QUEUE"
+queue = "phenologue-aggregation"
+
+[[queues.consumers]]
+queue = "phenologue-aggregation"
+max_batch_size = 25
+max_batch_timeout = 10
+
+[triggers]
+crons = ["0 3 * * *"]
+
+[vars]
+METHODOLOGY_VERSION = "0.1"
+API_VERSION = "0.1"
+ENVIRONMENT = "local"
+
+# === Prod environment ===
+[env.prod]
+name = "phenologue-worker-prod"
+compatibility_date = "2025-07-18"
+compatibility_flags = ["nodejs_compat"]
+
+[env.prod.vars]
+METHODOLOGY_VERSION = "0.1"
+API_VERSION = "0.1"
+ENVIRONMENT = "prod"
+
+[[env.prod.d1_databases]]
+binding = "DB"
+database_name = "phenologue-prod"
+database_id = "e2bc9a6f-21e7-4ac2-a0ef-83cd4a0a30b7"
+migrations_dir = "migrations"
+
+[[env.prod.kv_namespaces]]
+binding = "CACHE"
+id = "aef1dfdd41734c8ca1351839e1736637"
+
+# R2 and Queues added once enabled in dashboard
+# [[env.prod.r2_buckets]]
+# binding = "IMAGES"
+# bucket_name = "phenologue-images-prod"
+
+# === Dev environment ===
+# Used by the public dev Pages site (dev.phenologue.uk → phenologue-dev pages
+# project) and by anyone running `wrangler dev --env dev` against real Cloudflare
+# resources. Mirrors prod's compat flags so deploys behave the same.
+[env.dev]
+name = "phenologue-worker-dev"
+compatibility_date = "2025-07-18"
+compatibility_flags = ["nodejs_compat"]
+
+[env.dev.vars]
+METHODOLOGY_VERSION = "0.1"
+API_VERSION = "0.1"
+ENVIRONMENT = "dev"
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "phenologue-dev"
+database_id = "91fa4b24-f9b2-4754-96a4-312c0bbc9bc4"
+migrations_dir = "migrations"
+
+[[env.dev.kv_namespaces]]
+binding = "CACHE"
+id = "c5373e367a68403a99dd64f25e1c0b65"
